@@ -55,11 +55,27 @@ const post = async (route = '', payload) => {
   }
 };
 
-// const del = async (id = null) => {
-
-// };
+const del = async (route = '', id = null) => {
+  try {
+    let url = `${API}${route}`;
+    if (id) {
+      url += '/' + id
+    }
+    const options = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    const res = await fetch(url, options);
+    return await res.json();
+  } catch (e) {
+    // console.log(e);
+    return null
+  }
+};
 
 
 export {
-  get, put, post
+  get, put, post, del
 }
