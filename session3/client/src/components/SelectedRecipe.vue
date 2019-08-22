@@ -16,6 +16,13 @@
       <br />
       <br />
 
+      <label for="recipe-name">Chef</label>
+      <br/>
+      <input type="text" v-model="selectedRecipe.chef"/>
+
+      <br />
+      <br />
+
       <button v-if="operationType === 'add'">Add</button>
       <button v-else>Update</button>
     </form>
@@ -30,7 +37,13 @@ export default {
     'operationType': String
   },
   methods: {
-
+    sendNewData() {
+      this.$emit('newRecipe', {
+        name: selectedRecipe.name,
+        steps: selectedRecipe.steps,
+        chef: selectedRecipe.chef
+      })
+    }
   }
 }
 </script>

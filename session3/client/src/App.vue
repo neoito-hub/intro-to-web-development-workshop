@@ -38,7 +38,7 @@ export default {
       selectedData: {
         name: '',
         steps: '',
-        author: ''
+        chef: ''
       },
       operation: 'select'
     }
@@ -52,7 +52,7 @@ export default {
       this.selectedData = {
         name: '',
         steps: '',
-        author: ''
+        chef: ''
       };
     },
     async getAllRecipes() {
@@ -78,6 +78,7 @@ export default {
         const recipeResponse = await get('/recipes', this.selectedId)
         if (recipeResponse['error'] === false) {
           this.selectedData = recipeResponse['data'];
+          this.selectedData.chef = recipeResponse['data']['by']['name']
         } else {
           // alert
           alert(recipeResponse['message'])
