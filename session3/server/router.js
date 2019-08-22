@@ -5,4 +5,6 @@ const controller = require("./controller");
 
 router.get("/ping", controller.ping);
 
+router.post('/recipes', controller.addRecipe);
+
 module.exports = router;
