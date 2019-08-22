@@ -1,16 +1,35 @@
 <template>
   <div id="app">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <RecipeList msg="Welcome to Your Vue.js App"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import RecipeList from './components/RecipeList.vue'
+
+import { get } from './api';
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    RecipeList
+  },
+  data() {
+    return {
+      recipes: []
+    }
+  },
+  async mounted() {
+    await this.getAllRecipes()
+  },
+  methods: {
+    async getAllRecipes() {
+      try {
+        this.recipes = await get('/recipes')
+      } catch(e) {
+        // console.log(e);
+      }
+    }
   }
 }
 </script>
