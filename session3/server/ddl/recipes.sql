@@ -8,3 +8,8 @@ CREATE TABLE recipes
   updated_at           datetime,
   FOREIGN KEY(chef_id) REFERENCES chefs(id)
 );
+
+select r.id, r.name, r.chef_id, c.name as chef_name 
+from recipes r
+join chefs c on c.id = r.chef_id
+where r.id=1 

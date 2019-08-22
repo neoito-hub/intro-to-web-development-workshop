@@ -45,6 +45,40 @@ const getAllRecipes = async (req, res, next) => {
   }
 }
 
+const getRecipeDetails = async (req, res, next) => {
+  try {
+    const sql = `
+    select r.id, r.name, r.steps, r.updated_at ,r.chef_id, c.name as chef_name 
+    from recipes r
+    join chefs c on c.id = r.chef_id
+    where r.id=${req.params.id}
+    `
+    const recipeData = await db.asyncGetOne(sql)
+    if (!recipeData) {
+      res.status(404).json(
+        buildResponse(true, 'Did not find recipe', {})
+      )
+    } else {
+      const response = {
+        id: recipeData.id,
+        name: recipeData.name,
+        steps: recipeData.steps,
+        updated_at: recipeData.updated_at,
+        by: {
+          id: recipeData.chef_id,
+          name: recipeData.chef_name
+        }
+      }
+      res.status(200).json(
+        buildResponse(false, 'Recipe found', response)
+      )
+    }
+  } catch (e) {
+    console.log(e)
+    next(e)
+  }
+}
+
 const addRecipe = async (req, res, next) => {
   try {
     let response = {
@@ -108,4 +142,5 @@ module.exports = {
   ping,
   addRecipe,
   getAllRecipes,
+  getRecipeDetails
 };
