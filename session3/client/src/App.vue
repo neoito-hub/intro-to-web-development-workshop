@@ -11,8 +11,7 @@
       </div>
     
       <div class="col selected">
-        <h2 style="margin-left: 10px;">Change Me</h2>
-        <SelectedRecipe />
+        <SelectedRecipe :selectedRecipe="selectedData" :operationType="operation"/>
       </div>
 
     </div>
@@ -36,7 +35,8 @@ export default {
     return {
       allRecipes: [],
       selectedId: null,
-      selectedData: {}
+      selectedData: {},
+      operation: 'select'
     }
   },
   async mounted() {
@@ -48,6 +48,11 @@ export default {
         const recipesResponse = await get('/recipes')
         if (recipesResponse['error'] === false) {
           this.allRecipes = recipesResponse['data'];
+
+          if (this.allRecipes.length > 0) {
+            this.selectedId = this.allRecipes[0]['id']
+            await this.getRecipeInfo()
+          }
         } else {
           // alert
           alert(recipesResponse['message'])
