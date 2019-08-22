@@ -2,7 +2,7 @@
   <div id="app" class="container">
     <h1>Recipe App</h1>
     <div class="add">
-      <button>Add New</button>
+      <button @click="toggleAdd()">Add New</button>
     </div>
 
     <div class="row">
@@ -35,7 +35,11 @@ export default {
     return {
       allRecipes: [],
       selectedId: null,
-      selectedData: {},
+      selectedData: {
+        name: '',
+        steps: '',
+        author: ''
+      },
       operation: 'select'
     }
   },
@@ -43,6 +47,14 @@ export default {
     await this.getAllRecipes()
   },
   methods: {
+    toggleAdd() {
+      this.operation = 'add';
+      this.selectedData = {
+        name: '',
+        steps: '',
+        author: ''
+      };
+    },
     async getAllRecipes() {
       try {
         const recipesResponse = await get('/recipes')
