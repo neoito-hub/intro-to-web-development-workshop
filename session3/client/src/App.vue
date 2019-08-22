@@ -23,7 +23,7 @@
 import RecipeList from './components/RecipeList.vue'
 import SelectedRecipe from './components/SelectedRecipe.vue'
 
-import { get, post, put } from './api';
+import { get, post, put, del } from './api';
 
 export default {
   name: 'app',
@@ -93,7 +93,28 @@ export default {
       await this.getRecipeInfo()
     },
     async addUpdateRecipe(params) {
-      
+      try {
+        let response = {}
+        if (this.operation === 'add') {
+          // post request
+          response = await post('/recipes', params)
+        } else {
+          // put request
+          response = await put('/recipes', this.selectedId, params)
+        }
+        if (response['error'] === false) {
+          if (this.operation === 'add') {
+            this.allRecipes.push(response['data'])
+          } else {
+            await this.getAllRecipes()
+          }
+        } else {
+          // alert
+          alert(response['message'])
+        }
+      } catch(e) {
+        // hoo!
+      }
     }
   }
 }
