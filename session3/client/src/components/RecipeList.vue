@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h1>{{ msg }}</h1>
+    <ul id="app-recipe-list">
+      <li v-for="recipe of recipes" :key="recipe.id">{{ recipe.name }}</li>
+    </ul>
   </div>
 </template>
 
@@ -8,7 +10,7 @@
 export default {
   name: 'RecipeList',
   props: {
-    msg: String
+    recipes: Array
   }
 }
 </script>

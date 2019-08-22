@@ -6,7 +6,8 @@ const get = async (route = '', id = null) => {
     if (id) {
       url += '/' + id
     }
-    return fetch(url)
+    const res = await fetch(url);
+    return await res.json();
   } catch (e) {
     // console.log(e);
     return null

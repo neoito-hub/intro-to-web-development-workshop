@@ -9,13 +9,14 @@
       <div class="col list">
         <RecipeList :recipes="allRecipes"/>
       </div>
+    
+      <div class="col selected">
+        <h2 style="margin-left: 10px;">Change Me</h2>
+        <SelectedRecipe />
+      </div>
+
     </div>
     
-    <div class="col selected">
-      <h2 style="margin-left: 10px;">Change Me</h2>
-      <SelectedRecipe />
-    </div>
-
   </div>
 </template>
 
@@ -42,7 +43,13 @@ export default {
   methods: {
     async getAllRecipes() {
       try {
-        this.allRecipes = await get('/recipes')
+        const recipesResponse = await get('/recipes')
+        if (recipesResponse['error'] === false) {
+          this.allRecipes = recipesResponse['data'];
+        } else {
+          // alert
+          alert(recipesResponse['message'])
+        }
       } catch(e) {
         // console.log(e);
       }
