@@ -116,6 +116,7 @@ export default {
     },
     async setSelected(params) {
       // const selected = this.allRecipes.find(r => r.id === params)
+      this.operation = 'select';
       this.selectedId = params;
       await this.getRecipeInfo()
     },
@@ -131,7 +132,8 @@ export default {
         }
         if (response['error'] === false) {
           if (this.operation === 'add') {
-            this.allRecipes.push(response['data'])
+            // this.allRecipes.push(response['data'])
+            await this.getAllRecipes()
           } else {
             await this.getAllRecipes()
           }
