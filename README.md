@@ -42,6 +42,16 @@
 - The DOM
 - HTML/CSS/JS
 
+## Session 1
+
+- `python -m SimpleHTTPServer`
+- Node.js and Chrome
+- Synchronous and Asynchronous
+- JS fundamentals
+- **BUILD** a vanilla JS app
+
+## Session 2
+
 ### Client and Server
 
 - Header and payload - `curl -i http://localhost:3030/`
@@ -62,8 +72,11 @@
   ```
 - The `data` for the `resource` can be in a database, a file or in memory of a server.
 
-## Session 1
-
-## Session 2
+- Databases and Tables
+- **BUILD** a server - Express.JS
 
 ## Session 3
+
+- SSR vs SPAs
+- Intro to Vue.Js
+- **BUILD** REST API + VUE CLI generated app
