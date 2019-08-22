@@ -137,10 +137,63 @@ const addRecipe = async (req, res, next) => {
   }
 }
 
+const updateRecipe = async (req, res, next) => {
+  try {
+
+    // check if the recipe exists
+    let sql = `SELECT chef_id, name, steps FROM recipes WHERE id=${req.params.id}`;
+    const recipe = await db.asyncGetOne(sql);
+
+    if (!recipe) {
+      res.status(404).json(
+        buildResponse(true, 'Recipe not found', {})
+      )
+    } else {
+      // chef check
+      const chefName = req.body.chef
+      let chefData = await getChefData(chefName)
+
+      // create a chef, if we get string
+      if (!chefData) {
+        sql = `INSERT INTO chefs(name) VALUES ('${chefName}')`;
+        // console.log(sql);
+        const chef_id = await db.asyncRun(sql)
+        if (!chef_id) {
+          res.status(500).json(
+            buildResponse(true, 'Failed to create chef', {})
+          )
+        } else {
+          chefData = {
+            id: chef_id,
+            name: chefName
+          }
+        }
+      }
+      // chef check ends
+      sql = `UPDATE recipes SET 
+            chef_id=${chefData.id}, name='${req.body.name}', 
+            steps='${req.body.steps}', updated_at=datetime('now') 
+            WHERE id=${req.params.id}`;
+
+      const update = await db.asyncRun(sql)
+
+      console.log(update)
+      res.status(200).json(
+        buildResponse(false, 'Updated successfully', {})
+      )
+    }
+
+  } catch (e) {
+    console.log(e)
+    next(e)
+  }
+}
+
 
 module.exports = {
   ping,
   addRecipe,
   getAllRecipes,
-  getRecipeDetails
+  getRecipeDetails,
+  updateRecipe
 };

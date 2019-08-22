@@ -8,6 +8,7 @@ router.get("/ping", controller.ping);
 router.post('/recipes', controller.addRecipe)
   .get('/recipes', controller.getAllRecipes);
 
-router.get('/recipes/:id', controller.getRecipeDetails);
+router.get('/recipes/:id', controller.getRecipeDetails)
+  .put('/recipes/:id', controller.updateRecipe);
 
 module.exports = router;
