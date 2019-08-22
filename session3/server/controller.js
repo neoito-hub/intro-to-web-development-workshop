@@ -27,9 +27,19 @@ const ping = (req, res, next) => {
   }
 };
 
-const getAllRecipes = (req, res, next) => {
+const getAllRecipes = async (req, res, next) => {
   try {
+    const sql = `SELECT id, name FROM recipes ORDER BY updated_at DESC`;
+    const recipes = await db.asyncGetMany(sql);
+    if (!recipes) {
+      res.status(500).json(
+        buildResponse(true, 'Failed to find recipes', {})
+      );
+    }
 
+    res.status(200).json(
+      buildResponse(false, '', recipes)
+    );
   } catch (e) {
     next(e)
   }
@@ -48,7 +58,7 @@ const addRecipe = async (req, res, next) => {
     };
     let sql = "";
     const chefName = req.body.chef
-    const chefData = await getChefData(chefName)
+    let chefData = await getChefData(chefName)
 
     // create a chef, if we get string
     if (!chefData) {
@@ -60,14 +70,16 @@ const addRecipe = async (req, res, next) => {
           buildResponse(true, 'Failed to create chef', {})
         )
       } else {
-        response.by.id = chef_id;
-        response.by.name = chefName;
+        chefData = {
+          id: chef_id,
+          name: chefName
+        }
       }
     }
 
     // add the recipe
     const keys = '(chef_id, name, steps, created_at, updated_at)';
-    const values = `(${chefData.id}, '${req.body.name}', '${req.body.steps}', date(\'now\'), date(\'now\'))`;
+    const values = `(${chefData.id}, '${req.body.name}', '${req.body.steps}', datetime('now'), datetime('now'))`;
     sql = `INSERT INTO recipes ${keys} VALUES ${values}`
     // console.log(sql)
     const recipe_id = await db.asyncRun(sql)
@@ -95,4 +107,5 @@ const addRecipe = async (req, res, next) => {
 module.exports = {
   ping,
   addRecipe,
+  getAllRecipes,
 };
