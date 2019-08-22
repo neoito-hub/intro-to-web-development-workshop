@@ -7,7 +7,7 @@
 
     <div class="row">
       <div class="col list">
-        <RecipeList :recipes="allRecipes"/>
+        <RecipeList :recipes="allRecipes" @selected="setSelected"/>
       </div>
     
       <div class="col selected">
@@ -34,7 +34,9 @@ export default {
   },
   data() {
     return {
-      allRecipes: []
+      allRecipes: [],
+      selectedId: null,
+      selectedData: {}
     }
   },
   async mounted() {
@@ -53,6 +55,24 @@ export default {
       } catch(e) {
         // console.log(e);
       }
+    },
+    async getRecipeInfo() {
+      try {
+        const recipeResponse = await get('/recipes', this.selectedId)
+        if (recipeResponse['error'] === false) {
+          this.selectedData = recipeResponse['data'];
+        } else {
+          // alert
+          alert(recipeResponse['message'])
+        }
+      } catch(e) {
+        // ahah!
+      }
+    },
+    async setSelected(params) {
+      // const selected = this.allRecipes.find(r => r.id === params)
+      this.selectedId = params;
+      await this.getRecipeInfo()
     }
   }
 }
