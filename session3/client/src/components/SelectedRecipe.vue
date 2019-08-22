@@ -25,6 +25,7 @@
 
       <button v-if="operationType === 'add'" @click="sendNewData()">Add</button>
       <button v-else @click="sendNewData()">Update</button>
+      <button @click="deleteRecipe()">Delete</button>
     </form>
   </div>
 </template>
@@ -43,6 +44,9 @@ export default {
         steps: this.selectedRecipe.steps,
         chef: this.selectedRecipe.chef
       })
+    },
+    deleteRecipe() {
+      this.$emit('deleteRecipe')
     }
   }
 }

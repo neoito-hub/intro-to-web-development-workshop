@@ -11,7 +11,10 @@
       </div>
     
       <div class="col selected">
-        <SelectedRecipe :selectedRecipe="selectedData" :operationType="operation" @newRecipe="addUpdateRecipe"/>
+        <SelectedRecipe :selectedRecipe="selectedData" 
+          :operationType="operation" 
+          @newRecipe="addUpdateRecipe"
+          @deleteRecipe="doDeleteRecipe"/>
       </div>
 
     </div>
@@ -47,6 +50,16 @@ export default {
     await this.getAllRecipes()
   },
   methods: {
+    async reset() {
+      await this.getAllRecipes();
+      this.selectedData = {
+        name: '',
+        steps: '',
+        chef: ''
+      };
+      this.operation = 'select';
+      this.selectedId = null;
+    },
     toggleAdd() {
       this.operation = 'add';
       this.selectedData = {
@@ -85,6 +98,20 @@ export default {
         }
       } catch(e) {
         // ahah!
+      }
+    },
+    async doDeleteRecipe() {
+      try { 
+        const resp = await del('/recipes', this.selectedId)
+        if (resp['error'] === false) {
+          // boo!
+          await this.getAllRecipes()
+        } else {
+          // alert
+          alert(resp['message'])
+        }
+      } catch(e) {
+        // argh!
       }
     },
     async setSelected(params) {
