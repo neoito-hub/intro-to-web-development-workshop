@@ -23,8 +23,8 @@
       <br />
       <br />
 
-      <button v-if="operationType === 'add'">Add</button>
-      <button v-else>Update</button>
+      <button v-if="operationType === 'add'" @click="sendNewData()">Add</button>
+      <button v-else @click="sendNewData()">Update</button>
     </form>
   </div>
 </template>
@@ -39,9 +39,9 @@ export default {
   methods: {
     sendNewData() {
       this.$emit('newRecipe', {
-        name: selectedRecipe.name,
-        steps: selectedRecipe.steps,
-        chef: selectedRecipe.chef
+        name: this.selectedRecipe.name,
+        steps: this.selectedRecipe.steps,
+        chef: this.selectedRecipe.chef
       })
     }
   }

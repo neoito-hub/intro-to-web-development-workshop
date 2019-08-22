@@ -11,7 +11,7 @@
       </div>
     
       <div class="col selected">
-        <SelectedRecipe :selectedRecipe="selectedData" :operationType="operation"/>
+        <SelectedRecipe :selectedRecipe="selectedData" :operationType="operation" @newRecipe="addUpdateRecipe"/>
       </div>
 
     </div>
@@ -23,7 +23,7 @@
 import RecipeList from './components/RecipeList.vue'
 import SelectedRecipe from './components/SelectedRecipe.vue'
 
-import { get } from './api';
+import { get, post, put } from './api';
 
 export default {
   name: 'app',
@@ -91,6 +91,9 @@ export default {
       // const selected = this.allRecipes.find(r => r.id === params)
       this.selectedId = params;
       await this.getRecipeInfo()
+    },
+    async addUpdateRecipe(params) {
+      
     }
   }
 }
