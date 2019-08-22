@@ -137,6 +137,20 @@ const addRecipe = async (req, res, next) => {
   }
 }
 
+const deleteRecipe = async (req, res, next) => {
+  try {
+    let sql = `DELETE FROM recipes WHERE id='${req.params.id}'`;
+    const del = await db.asyncRun(sql)
+    console.log(del)
+    res.status(200).json(
+      buildResponse(false, 'Deleted successfully', {})
+    )
+  } catch (e) {
+    console.log(e)
+    next(e)
+  }
+}
+
 const updateRecipe = async (req, res, next) => {
   try {
 
@@ -176,7 +190,6 @@ const updateRecipe = async (req, res, next) => {
             WHERE id=${req.params.id}`;
 
       const update = await db.asyncRun(sql)
-
       console.log(update)
       res.status(200).json(
         buildResponse(false, 'Updated successfully', {})
@@ -195,5 +208,6 @@ module.exports = {
   addRecipe,
   getAllRecipes,
   getRecipeDetails,
-  updateRecipe
+  updateRecipe,
+  deleteRecipe,
 };

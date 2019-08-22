@@ -9,6 +9,7 @@ router.post('/recipes', controller.addRecipe)
   .get('/recipes', controller.getAllRecipes);
 
 router.get('/recipes/:id', controller.getRecipeDetails)
-  .put('/recipes/:id', controller.updateRecipe);
+  .put('/recipes/:id', controller.updateRecipe)
+  .delete('/recipes/:id', controller.deleteRecipe);
 
 module.exports = router;
