@@ -1,5 +1,8 @@
 # Introduction to Web Development
 
+## Feedback
+[link](https://docs.google.com/forms/d/e/1FAIpQLSd8quQSXMXXerZnWMHxQVjbM8oq6IcPYNRBPZ0jQ0E9tvIHBg/viewform?vc=0&c=0&w=1)
+
 ## Index
 
 1. [Session 0](#session-0)
