@@ -1,6 +1,6 @@
 # Introduction to web development
 
-`swathi.b@` | `athul.rt@` | `muhammed.ts@` | `ashish.k@`
+`swathi.b@` | `athul.r@` | `muhammed.ts@` | `ashish.k@`
 
 [github](https://github.com/neoito-hub/intro-to-web-development-workshop)
 
